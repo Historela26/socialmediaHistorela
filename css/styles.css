@@ -1,0 +1,265 @@
+/* ===== Paleta Historela ===== */
+:root {
+  --azul-marino: #002564;
+  --azul-turquesa: #07566a;
+  --hueso: #faf5ea;
+  --dorado: #e9bd57;
+  --terracota: #e8755b;
+  --amarillo-tiktok: #ffd93b;
+  --fuente-botones: "Bebas Neue", Impact, "Arial Narrow", sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { min-height: 100%; }
+
+body {
+  background: var(--azul-marino);
+  color: var(--hueso);
+  font-family: var(--fuente-botones);
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+ul { list-style: none; }
+a { color: inherit; text-decoration: none; }
+
+.cursor-magico {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  width: 54px;
+  height: 54px;
+  pointer-events: none;
+  transform: translate(-27px, -27px);
+  filter: drop-shadow(0 3px 5px rgba(0, 37, 100, .35));
+  will-change: left, top;
+}
+
+.cursor-magico svg {
+  width: 100%;
+  height: 100%;
+  transform-origin: 12px 24px;
+}
+
+.destello-magico {
+  position: fixed;
+  z-index: 9998;
+  width: 7px;
+  height: 7px;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, #fff 0 18%, #ffd93b 20% 35%, transparent 70%);
+  filter: drop-shadow(0 0 5px #ffd93b);
+  animation: destello .8s ease-out forwards;
+}
+
+@keyframes destello {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(.35) rotate(0deg); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(2.1) rotate(135deg); }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  body, a, button {
+    cursor: none;
+  }
+
+  .cursor-magico {
+    display: block;
+  }
+}
+
+@media (max-width: 599px) {
+  .cursor-magico {
+    display: none !important;
+  }
+
+  body, a, button {
+    cursor: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .destello-magico { animation-duration: .01ms; }
+}
+
+/* ===== Móvil: contenido apilado ===== */
+.pagina {
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.marca {
+  background: var(--azul-turquesa);
+  padding: 2rem 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.logo { width: clamp(180px, 62%, 300px); }
+
+.iconos {
+  display: flex;
+  justify-content: center;
+  gap: 1.8rem;
+}
+
+.iconos a {
+  display: block;
+  width: 30px;
+  height: 30px;
+  color: var(--hueso);
+  transition: transform .2s ease, color .2s ease;
+}
+
+.iconos a:hover,
+.iconos a:focus-visible {
+  color: var(--dorado);
+  transform: scale(1.15);
+}
+
+.iconos svg { width: 100%; height: 100%; }
+
+.buho { width: clamp(110px, 38%, 190px); }
+
+/* ----- Botones ----- */
+.botones {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 10px;
+  padding: 12px 14px;
+}
+
+.boton {
+  flex: 1;
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(1.9rem, 8vw, 2.6rem);
+  letter-spacing: 3px;
+  transition: filter .2s ease, letter-spacing .2s ease;
+}
+
+.boton--terracota { background: var(--terracota); color: var(--hueso); }
+.boton--hueso     { background: var(--hueso);     color: var(--terracota); }
+
+.boton:hover,
+.boton:focus-visible {
+  filter: brightness(1.07);
+  letter-spacing: 4.5px;
+}
+
+/* ===== En pantallas apiladas, el degradado queda debajo de la marca ===== */
+@media (max-width: 899px) {
+  body {
+    background: linear-gradient(125deg, var(--azul-marino), var(--azul-turquesa), var(--azul-marino));
+    background-size: 220% 220%;
+    animation: duotono 22s ease-in-out infinite alternate;
+  }
+}
+
+@media (max-width: 599px) {
+  .botones {
+    flex: none;
+  }
+
+  .boton {
+    flex: none;
+    height: 78px;
+    min-height: 78px;
+  }
+}
+
+/* ===== Tablet vertical: más aire, manteniendo el diseño apilado ===== */
+@media (min-width: 600px) and (max-width: 899px) {
+  .pagina {
+    max-width: none;
+  }
+
+  .marca {
+    padding: 2.5rem 1.5rem 2rem;
+    gap: 1.5rem;
+  }
+
+  .botones {
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .boton { min-height: 104px; }
+}
+
+/* ===== Escritorio y tablet horizontal: dos mitades ===== */
+@media (min-width: 900px) {
+  .pagina {
+    position: relative;
+    isolation: isolate;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
+    min-height: 600px;
+  }
+
+  .pagina::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 0 50%;
+    z-index: -1;
+    background: linear-gradient(125deg, var(--azul-marino), var(--azul-turquesa), var(--azul-marino));
+    background-size: 220% 220%;
+    animation: duotono 22s ease-in-out infinite alternate;
+  }
+
+  .marca {
+    justify-content: center;
+    gap: clamp(.8rem, 2.5vh, 1.6rem);
+    padding: 2vh 2rem;
+  }
+
+  .logo { width: auto; height: min(38vh, 340px); }
+  .iconos { gap: 2.6rem; }
+  .iconos a { width: 38px; height: 38px; }
+  .buho { width: auto; height: min(36vh, 320px); }
+
+  .botones {
+    border: 0;
+    flex: none;
+    align-self: center;
+    justify-self: center;
+    width: min(86%, 600px);
+  }
+
+  .boton {
+    flex: none;
+    width: 100%;
+    height: clamp(90px, 16.5vh, 150px);
+    font-size: clamp(2.2rem, 3.4vw, 3.4rem);
+  }
+}
+
+@keyframes duotono {
+  from { background-position: 0% 50%; }
+  to { background-position: 100% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+  body { animation: none; }
+  .pagina::before { animation: none; }
+}
